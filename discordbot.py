@@ -8,7 +8,7 @@ load_dotenv()
 PREFIX = os.environ['PREFIX']
 TOKEN = os.environ['TOKEN']
 
-intents = discord.Intents.default()
+intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 
 
