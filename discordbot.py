@@ -27,6 +27,7 @@ async def on_message(message):
 
     if message.content.startswith(f'{PREFIX}hello'):
         await message.channel.send('Hello!')
+    print('msg : ', message.content)
 
 
 try:
