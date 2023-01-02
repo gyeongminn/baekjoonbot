@@ -90,7 +90,7 @@ async def on_message(message):
         tags = ", ".join(tags)
         level = data['level']
         embed = discord.Embed(
-            title="문제 링크", url="https://www.acmicpc.net/problem/"+problem)
+            color=0x3e76c0, title="문제 링크", url="https://www.acmicpc.net/problem/"+problem)
         embed.set_author(name=data['titleKo'], url="https://www.acmicpc.net/problem/" +
                          problem, icon_url=get_icon(level))
         embed.add_field(name="문제 번호", value=data['problemId'], inline=True)
