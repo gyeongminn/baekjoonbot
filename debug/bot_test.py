@@ -1,4 +1,4 @@
-"""import discord
+import discord
 
 PREFIX = '/'
 TOKEN = 'MTA1NTc5MTg2MTU3MjMyNTQxNw.Gke9cZ.HV0xh3n-TdIhDuqs9R9kw3wqjhBoboIQ2AB5Ok'
@@ -29,5 +29,3 @@ try:
     client.run(TOKEN)
 except discord.errors.LoginFailure as e:
     print("Improper token has been passed.")
-"""
-
