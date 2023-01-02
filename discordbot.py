@@ -26,9 +26,8 @@ async def on_message(message):
     if message.content == f'{PREFIX}call':
         await message.channel.send("callback!")
 
-    if message.content.startswith(f'{PREFIX}hello'):
-        await message.channel.send('Hello!')
-    print('msg : ', message.content)
+    if message.content.startswith(f'{PREFIX}업로드'):
+        await message.channel.send('문제 링크를 입력해 주세요')
 
 
 try:
