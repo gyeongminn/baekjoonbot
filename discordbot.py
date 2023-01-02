@@ -1,7 +1,6 @@
 from cmath import log
 from distutils.sysconfig import PREFIX
 import discord
-from bs4 import BeautifulSoup
 import requests
 import json
 from dotenv import load_dotenv
