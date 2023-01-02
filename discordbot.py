@@ -8,9 +8,10 @@ load_dotenv()
 PREFIX = os.environ['PREFIX']
 TOKEN = os.environ['TOKEN']
 
-intents = discord.Intents.default()
-intents.message_content = True
-client = discord.Client(intents=intents)
+# intents = discord.Intents.default()
+# intents.message_content = True
+# client = discord.Client(intents=intents)
+client = discord.Client()
 
 
 @client.event
