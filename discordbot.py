@@ -28,6 +28,7 @@ async def on_message(message):
         url = str(message.content).split('/백준 ')[1]
         await message.channel.send('문제 링크 :'+url)
         print(url)
+        await message.content.delete()
 
 
 try:
