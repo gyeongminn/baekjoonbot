@@ -23,6 +23,7 @@ def get_icon(level):
              'https://user-images.githubusercontent.com/97784561/210267180-4aec3248-d91c-4566-8027-220ede31a199.png',
              'https://user-images.githubusercontent.com/97784561/210267181-c99dd3ad-d3d4-41c9-a65e-6158b36e2f4e.png',
              'https://user-images.githubusercontent.com/97784561/210267182-a9e62d9c-648c-41d3-a80a-a36227a69583.png',
+             'https://user-images.githubusercontent.com/97784561/210385925-6a901eb1-f650-4b10-b864-e39c2e342e47.png',
              'https://user-images.githubusercontent.com/97784561/210267183-afc94124-07ee-4554-903e-7cfef5f769ab.png',
              'https://user-images.githubusercontent.com/97784561/210267184-2faa7096-0748-4cd2-8e7a-8804b79d1dd2.png',
              'https://user-images.githubusercontent.com/97784561/210267185-9f93420d-aeeb-48bd-a687-7b33fb1d7b48.png',
