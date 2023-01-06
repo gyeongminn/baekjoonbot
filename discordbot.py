@@ -136,9 +136,9 @@ async def on_message(message):
         await message.channel.send(embed=embed)
 
     elif message.content.startswith(f"{PREFIX}코드"):
-        url = str(message.content).split("/코드 ")[1].split(" ")
-        problem = url.split("https://www.acmicpc.net/problem/")[1]
-        code = url.split(" ")[1]
+        url = str(message.content).split("/코드 ")[1].split()[0]
+        problem = url.split("https://www.acmicpc.net/problem/")[1].split()[0]
+        code = message.content.split(problem)[1].strip()
 
         data = get_data(problem)
 
