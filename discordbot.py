@@ -162,7 +162,7 @@ async def on_message(message):
         embed.add_field(name="문제 번호", value=data["problemId"], inline=True)
         embed.add_field(name="난이도", value=get_level(level), inline=True)
         embed.add_field(name="유형", value=tags, inline=True)
-        embed.add_field(name="소스코드 {0.mention}", value=code, inline=False)
+        embed.add_field(name="소스코드 @"+message.author, value=code, inline=False)
         await message.channel.send(embed=embed)
 
 
