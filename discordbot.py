@@ -114,6 +114,7 @@ async def on_message(message):
             problem = url.split("https://www.acmicpc.net/problem/")[1]
         except:
             await message.channel.send('잘못된 입력입니다.')
+            return
         
         
         await message.delete()
@@ -122,6 +123,7 @@ async def on_message(message):
             data = get_data(problem)
         except:
             await message.channel.send('데이터를 가져오지 못했습니다.')
+            return
 
         tags = []
         for t in data["tags"]:
@@ -150,6 +152,7 @@ async def on_message(message):
             code = message.content.split(problem)[1].strip()
         except:
             await message.channel.send('잘못된 입력입니다.')
+            return
 
         await message.delete()
 
@@ -157,6 +160,7 @@ async def on_message(message):
             data = get_data(problem)
         except:
             await message.channel.send('데이터를 가져오지 못했습니다.')
+            return
             
         tags = []
         for t in data["tags"]:
