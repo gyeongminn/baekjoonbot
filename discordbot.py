@@ -148,6 +148,8 @@ async def on_message(message):
             tags.append(t["displayNames"][0]["name"])
         tags = ", ".join(tags)
         level = data["level"]
+        
+        await message.channel.send("@"+str(message.author))
 
         embed = discord.Embed(
             color=0x3E76C0,
@@ -162,7 +164,7 @@ async def on_message(message):
         embed.add_field(name="문제 번호", value=data["problemId"], inline=True)
         embed.add_field(name="난이도", value=get_level(level), inline=True)
         embed.add_field(name="유형", value=tags, inline=True)
-        embed.add_field(name="소스코드 @"+str(message.author), value=code, inline=False)
+        embed.add_field(name="소스코드", value=code, inline=False)
         await message.channel.send(embed=embed)
 
 
