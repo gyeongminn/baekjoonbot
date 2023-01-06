@@ -139,6 +139,8 @@ async def on_message(message):
         url = str(message.content).split("/코드 ")[1].split()[0]
         problem = url.split("https://www.acmicpc.net/problem/")[1].split()[0]
         code = message.content.split(problem)[1].strip()
+        
+        await message.delete()
 
         data = get_data(problem)
         tags = []
