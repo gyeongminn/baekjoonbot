@@ -109,11 +109,19 @@ async def on_message(message):
         return
 
     if message.content.startswith(f"{PREFIX}백준"):
-        url = str(message.content).split("/백준 ")[1]
-        problem = url.split("https://www.acmicpc.net/problem/")[1]
+        try:
+            url = str(message.content).split("/백준 ")[1]
+            problem = url.split("https://www.acmicpc.net/problem/")[1]
+        except:
+            await message.channel.send('잘못된 입력입니다.')
+        
+        
         await message.delete()
 
-        data = get_data(problem)
+        try:
+            data = get_data(problem)
+        except:
+            await message.channel.send('데이터를 가져오지 못했습니다.')
 
         tags = []
         for t in data["tags"]:
@@ -136,13 +144,20 @@ async def on_message(message):
         await message.channel.send(embed=embed)
 
     elif message.content.startswith(f"{PREFIX}코드"):
-        url = str(message.content).split("/코드 ")[1].split()[0]
-        problem = url.split("https://www.acmicpc.net/problem/")[1].split()[0]
-        code = message.content.split(problem)[1].strip()
+        try:
+            url = str(message.content).split("/코드 ")[1].split()[0]
+            problem = url.split("https://www.acmicpc.net/problem/")[1].split()[0]
+            code = message.content.split(problem)[1].strip()
+        except:
+            await message.channel.send('잘못된 입력입니다.')
 
         await message.delete()
 
-        data = get_data(problem)
+        try:
+            data = get_data(problem)
+        except:
+            await message.channel.send('데이터를 가져오지 못했습니다.')
+            
         tags = []
         for t in data["tags"]:
             tags.append(t["displayNames"][0]["name"])
