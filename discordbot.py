@@ -138,7 +138,7 @@ async def on_message(message):
     elif message.content.startswith(f"{PREFIX}코드"):
         url = str(message.content).split("/코드 ")[1].split(" ")
         problem = url.split("https://www.acmicpc.net/problem/")[1]
-        code = str(message.content).split(problem)
+        code = url.split(" ")[1]
 
         data = get_data(problem)
 
