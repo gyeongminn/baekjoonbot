@@ -139,7 +139,7 @@ async def on_message(message):
         url = str(message.content).split("/코드 ")[1].split()[0]
         problem = url.split("https://www.acmicpc.net/problem/")[1].split()[0]
         code = message.content.split(problem)[1].strip()
-        
+
         await message.delete()
 
         data = get_data(problem)
@@ -148,8 +148,8 @@ async def on_message(message):
             tags.append(t["displayNames"][0]["name"])
         tags = ", ".join(tags)
         level = data["level"]
-        
-        await message.channel.send("@"+str(message.author))
+
+        await message.channel.send("@" + str(message.author))
 
         embed = discord.Embed(
             color=0x3E76C0,
