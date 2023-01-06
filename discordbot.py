@@ -141,6 +141,11 @@ async def on_message(message):
         code = message.content.split(problem)[1].strip()
 
         data = get_data(problem)
+        tags = []
+        for t in data["tags"]:
+            tags.append(t["displayNames"][0]["name"])
+        tags = ", ".join(tags)
+        level = data["level"]
 
         embed = discord.Embed(
             color=0x3E76C0,
@@ -150,9 +155,12 @@ async def on_message(message):
         embed.set_author(
             name=data["titleKo"],
             url="https://www.acmicpc.net/problem/" + problem,
-            icon_url=get_icon(data["level"]),
+            icon_url=get_icon(level),
         )
-        embed.add_field(name="소스코드", value=code, inline=True)
+        embed.add_field(name="문제 번호", value=data["problemId"], inline=True)
+        embed.add_field(name="난이도", value=get_level(level), inline=True)
+        embed.add_field(name="유형", value=tags, inline=True)
+        embed.add_field(name="소스코드", value=code, inline=False)
         await message.channel.send(embed=embed)
 
 
