@@ -115,8 +115,7 @@ async def on_message(message):
         except:
             await message.channel.send('잘못된 입력입니다.')
             return
-        
-        
+
         await message.delete()
 
         try:
@@ -135,7 +134,7 @@ async def on_message(message):
         except:
             await message.channel.send('데이터를 가져오지 못했습니다.')
             return
-        
+
         try:
             embed = discord.Embed(
                 color=0x3E76C0,
@@ -154,11 +153,11 @@ async def on_message(message):
         except:
             await message.channel.send('메세지 전송이 실패했습니다.')
 
-
     elif message.content.startswith(f"{PREFIX}코드"):
         try:
             url = str(message.content).split("/코드 ")[1].split()[0]
-            problem = url.split("https://www.acmicpc.net/problem/")[1].split()[0]
+            problem = url.split(
+                "https://www.acmicpc.net/problem/")[1].split()[0]
             code = message.content.split(problem)[1].strip()
         except:
             await message.channel.send('잘못된 입력입니다.')
@@ -173,29 +172,67 @@ async def on_message(message):
                 tags.append(t["displayNames"][0]["name"])
             tags = ", ".join(tags)
             level = data["level"]
-            author = "소스코드 @" + str(message.author)
+            author = "소스코드 <@{}>".format(message.author.id)
         except:
             await message.channel.send('데이터를 가져오지 못했습니다.')
             return
-            
+
+        embed = discord.Embed(
+            color=0x3E76C0,
+            title="문제 링크",
+            url="https://www.acmicpc.net/problem/" + problem,
+        )
+        embed.set_author(
+            name=data["titleKo"],
+            url="https://www.acmicpc.net/problem/" + problem,
+            icon_url=get_icon(level),
+        )
+        embed.add_field(name="문제 번호", value=data["problemId"], inline=True)
+        embed.add_field(name="난이도", value=get_level(level), inline=True)
+        embed.add_field(name="유형", value=tags, inline=True)
+        embed.add_field(name=author, value=code, inline=False)
+        await message.channel.send(embed=embed)
+
+    elif message.content.startswith(f"{PREFIX}긴코드"):
         try:
-            embed = discord.Embed(
-                color=0x3E76C0,
-                title="문제 링크",
-                url="https://www.acmicpc.net/problem/" + problem,
-            )
-            embed.set_author(
-                name=data["titleKo"],
-                url="https://www.acmicpc.net/problem/" + problem,
-                icon_url=get_icon(level),
-            )
-            embed.add_field(name="문제 번호", value=data["problemId"], inline=True)
-            embed.add_field(name="난이도", value=get_level(level), inline=True)
-            embed.add_field(name="유형", value=tags, inline=True)
-            embed.add_field(name=author, value=code, inline=False)
-            await message.channel.send(embed=embed)
+            url = str(message.content).split("/긴코드 ")[1].split()[0]
+            problem = url.split(
+                "https://www.acmicpc.net/problem/")[1].split()[0]
+            code = message.content.split(problem)[1].strip()
         except:
-            await message.channel.send('메세지 전송이 실패했습니다.')
+            await message.channel.send('긴코드 잘못된 입력입니다.')
+            return
+
+        await message.delete()
+
+        try:
+            data = get_data(problem)
+            tags = []
+            for t in data["tags"]:
+                tags.append(t["displayNames"][0]["name"])
+            tags = ", ".join(tags)
+            level = data["level"]
+            author = str(message.author).split('#')[0] + "님의 소스코드 입니다."
+        except:
+            await message.channel.send('데이터를 가져오지 못했습니다.')
+            return
+
+        embed = discord.Embed(
+            color=0x3E76C0,
+            title="문제 링크",
+            url="https://www.acmicpc.net/problem/" + problem,
+        )
+        embed.set_author(
+            name=data["titleKo"],
+            url="https://www.acmicpc.net/problem/" + problem,
+            icon_url=get_icon(level),
+        )
+        embed.add_field(name="문제 번호", value=data["problemId"], inline=True)
+        embed.add_field(name="난이도", value=get_level(level), inline=True)
+        embed.add_field(name="유형", value=tags, inline=True)
+        await message.channel.send(embed=embed)
+
+        await message.channel.send(author + '\n' + code)
 
 
 try:
