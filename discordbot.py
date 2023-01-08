@@ -167,21 +167,24 @@ async def on_message(message):
             await message.channel.send('데이터를 가져오지 못했습니다.')
             return
             
-        embed = discord.Embed(
-            color=0x3E76C0,
-            title="문제 링크",
-            url="https://www.acmicpc.net/problem/" + problem,
-        )
-        embed.set_author(
-            name=data["titleKo"],
-            url="https://www.acmicpc.net/problem/" + problem,
-            icon_url=get_icon(level),
-        )
-        embed.add_field(name="문제 번호", value=data["problemId"], inline=True)
-        embed.add_field(name="난이도", value=get_level(level), inline=True)
-        embed.add_field(name="유형", value=tags, inline=True)
-        embed.add_field(name="소스코드 @" + str(message.author), value=code, inline=False)
-        await message.channel.send(embed=embed)
+        try:
+            embed = discord.Embed(
+                color=0x3E76C0,
+                title="문제 링크",
+                url="https://www.acmicpc.net/problem/" + problem,
+            )
+            embed.set_author(
+                name=data["titleKo"],
+                url="https://www.acmicpc.net/problem/" + problem,
+                icon_url=get_icon(level),
+            )
+            embed.add_field(name="문제 번호", value=data["problemId"], inline=True)
+            embed.add_field(name="난이도", value=get_level(level), inline=True)
+            embed.add_field(name="유형", value=tags, inline=True)
+            embed.add_field(name="소스코드 @" + str(message.author), value=code, inline=False)
+            await message.channel.send(embed=embed)
+        except:
+            await message.channel.send('메세지 전송이 실패했습니다.')
 
 
 try:
