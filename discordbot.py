@@ -178,11 +178,10 @@ async def on_message(message):
                 url="https://www.acmicpc.net/problem/" + problem,
                 icon_url=get_icon(level),
             )
-            author = "소스코드 @" + str(message.author)
             embed.add_field(name="문제 번호", value=data["problemId"], inline=True)
             embed.add_field(name="난이도", value=get_level(level), inline=True)
             embed.add_field(name="유형", value=tags, inline=True)
-            embed.add_field(name=author, value=code, inline=False)
+            embed.add_field(name="소스코드 @" + str(message.author), value=code, inline=False)
             await message.channel.send(embed=embed)
         except:
             await message.channel.send('메세지 전송이 실패했습니다.')
