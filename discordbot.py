@@ -158,16 +158,16 @@ async def on_message(message):
 
         try:
             data = get_data(problem)
+            tags = []
+            for t in data["tags"]:
+                tags.append(t["displayNames"][0]["name"])
+            tags = ", ".join(tags)
+            level = data["level"]
         except:
             await message.channel.send('데이터를 가져오지 못했습니다.')
             return
             
-        tags = []
-        for t in data["tags"]:
-            tags.append(t["displayNames"][0]["name"])
-        tags = ", ".join(tags)
-        level = data["level"]
-
+        await message.channel.send(("@{}".format(message.author.id)))
         embed = discord.Embed(
             color=0x3E76C0,
             title="문제 링크",
