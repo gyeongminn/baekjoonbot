@@ -167,7 +167,6 @@ async def on_message(message):
             await message.channel.send('데이터를 가져오지 못했습니다.')
             return
             
-        await message.channel.send("<@{}>".format(message.author.id))
         embed = discord.Embed(
             color=0x3E76C0,
             title="문제 링크",
