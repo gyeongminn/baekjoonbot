@@ -172,7 +172,7 @@ async def on_message(message):
                 tags.append(t["displayNames"][0]["name"])
             tags = ", ".join(tags)
             level = data["level"]
-            author = "소스코드 <@{}>".format(message.author.id)
+            author = str(message.author).split('#')[0] + "님의 소스코드 입니다."
         except:
             await message.channel.send('데이터를 가져오지 못했습니다.')
             return
