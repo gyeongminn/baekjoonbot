@@ -113,8 +113,12 @@ async def on_message(message):
             url = str(message.content).split("/백준 ")[1]
             problem = url.split("https://www.acmicpc.net/problem/")[1]
         except:
-            await message.channel.send('잘못된 입력입니다.')
-            return
+            try:
+                url = str(message.content).split("/백준 ")[1]
+                problem = int(url)
+            except:
+                await message.channel.send('잘못된 입력입니다.')
+                return
 
         await message.delete()
 
@@ -139,11 +143,11 @@ async def on_message(message):
             embed = discord.Embed(
                 color=0x3E76C0,
                 title="문제 링크",
-                url="https://www.acmicpc.net/problem/" + problem,
+                url="https://www.acmicpc.net/problem/" + str(problem),
             )
             embed.set_author(
                 name=data["titleKo"],
-                url="https://www.acmicpc.net/problem/" + problem,
+                url="https://www.acmicpc.net/problem/" + str(problem),
                 icon_url=get_icon(level),
             )
             embed.add_field(name="문제 번호", value=data["problemId"], inline=True)
@@ -160,8 +164,13 @@ async def on_message(message):
                 "https://www.acmicpc.net/problem/")[1].split()[0]
             code = message.content.split(problem)[1].strip()
         except:
-            await message.channel.send('잘못된 입력입니다.')
-            return
+            try:
+                url = str(message.content).split("/코드 ")[1].split()[0]
+                problem = int(url.split()[0])
+                code = message.content.split(str(problem))[1].strip()
+            except:
+                await message.channel.send('잘못된 입력입니다.')
+                return
 
         await message.delete()
 
@@ -180,11 +189,11 @@ async def on_message(message):
         embed = discord.Embed(
             color=0x3E76C0,
             title="문제 링크",
-            url="https://www.acmicpc.net/problem/" + problem,
+            url="https://www.acmicpc.net/problem/"+str(problem),
         )
         embed.set_author(
             name=data["titleKo"],
-            url="https://www.acmicpc.net/problem/" + problem,
+            url="https://www.acmicpc.net/problem/"+str(problem),
             icon_url=get_icon(level),
         )
         embed.add_field(name="문제 번호", value=data["problemId"], inline=True)
@@ -200,8 +209,13 @@ async def on_message(message):
                 "https://www.acmicpc.net/problem/")[1].split()[0]
             code = message.content.split(problem)[1].strip()
         except:
-            await message.channel.send('긴코드 잘못된 입력입니다.')
-            return
+            try:
+                url = str(message.content).split("/긴코드 ")[1].split()[0]
+                problem = int(url.split()[0])
+                code = message.content.split(str(problem))[1].strip()
+            except:
+                await message.channel.send('긴코드 잘못된 입력입니다.')
+                return
 
         await message.delete()
 
@@ -220,11 +234,11 @@ async def on_message(message):
         embed = discord.Embed(
             color=0x3E76C0,
             title="문제 링크",
-            url="https://www.acmicpc.net/problem/" + problem,
+            url="https://www.acmicpc.net/problem/"+str(problem),
         )
         embed.set_author(
             name=data["titleKo"],
-            url="https://www.acmicpc.net/problem/" + problem,
+            url="https://www.acmicpc.net/problem/"+str(problem),
             icon_url=get_icon(level),
         )
         embed.add_field(name="문제 번호", value=data["problemId"], inline=True)
