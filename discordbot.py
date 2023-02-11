@@ -256,13 +256,10 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-
     if message.content.startswith(f"{PREFIX}백준"):
         message_baekjooon(message, '/백준 ')
-
     elif message.content.startswith(f"{PREFIX}코드"):
         message_code(message, '/코드 ')
-
     elif message.content.startswith(f"{PREFIX}긴코드"):
         message_long_code(message, '/긴코드 ')
 
