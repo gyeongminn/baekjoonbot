@@ -98,19 +98,41 @@ TOKEN = os.environ["TOKEN"]
 client = discord.Client()
 
 
+async def get_problem(text):
+    name = text.split('\n')[0]
+    url = "https://solved.ac/api/v3/search/problem"
+    querystring = {"query": name}
+    headers = {"Content-Type": "application/json"}
+    response = requests.request(
+        "GET", url, headers=headers, params=querystring)
+    for item in json.loads(response.content)['items']:
+        if item['titleKo'] == name.strip():
+            problem = int(item['problemId'])
+            return int(problem)
+    try:
+        problem = int(text.split()[0].split()[0])
+    except:
+        problem = int(text.split("https://www.acmicpc.net/problem/")[1].split()[0])
+    return int(problem)
+
+
+async def get_code(text, problem):
+    try:
+        code = text.split(str(problem), maxsplit=1)[1].strip()
+    except:
+        name = text.split('\n')[0]
+        code = text.split(str(name), maxsplit=1)[1].strip()
+    return code
+
+
 async def message_baekjooon(message, split_str):
     try:
-        url = str(message.content).split(split_str)[1]
-        problem = url.split("https://www.acmicpc.net/problem/")[1]
+        text = str(message.content).split(split_str, maxsplit=1)[1]
+        problem = await get_problem(text)
+        await message.delete()
     except:
-        try:
-            url = str(message.content).split(split_str)[1]
-            problem = int(url)
-        except:
-            await message.channel.send('잘못된 입력입니다.')
-            return
-
-    await message.delete()
+        await message.channel.send('잘못된 입력입니다.')
+        return
 
     try:
         data = get_data(problem)
@@ -150,20 +172,13 @@ async def message_baekjooon(message, split_str):
 
 async def message_code(message, split_str):
     try:
-        url = str(message.content).split(split_str)[1].split()[0]
-        problem = url.split(
-            "https://www.acmicpc.net/problem/")[1].split()[0]
-        code = message.content.split(problem)[1].strip()
+        text = str(message.content).split(split_str, maxsplit=1)[1]
+        problem = await get_problem(text)
+        code = await get_code(text, problem)
+        await message.delete()
     except:
-        try:
-            url = str(message.content).split(split_str)[1].split()[0]
-            problem = int(url.split()[0])
-            code = message.content.split(str(problem))[1].strip()
-        except:
-            await message.channel.send('잘못된 입력입니다.')
-            return
-
-    await message.delete()
+        await message.channel.send('잘못된 입력입니다.')
+        return
 
     try:
         data = get_data(problem)
@@ -194,25 +209,35 @@ async def message_code(message, split_str):
         embed.add_field(name=author, value=code, inline=False)
         await message.channel.send(embed=embed)
     except:
-        await message_code(message, '/긴코드 ')
+        try:
+            embed = discord.Embed(
+                color=0x3E76C0,
+                title="문제 링크",
+                url="https://www.acmicpc.net/problem/"+str(problem),
+            )
+            embed.set_author(
+                name=data["titleKo"],
+                url="https://www.acmicpc.net/problem/"+str(problem),
+                icon_url=get_icon(level),
+            )
+            embed.add_field(name="문제 번호", value=data["problemId"], inline=True)
+            embed.add_field(name="난이도", value=get_level(level), inline=True)
+            embed.add_field(name="유형", value=tags, inline=True)
+            await message.channel.send(embed=embed)
+            await message.channel.send(author + '\n' + code)
+        except:
+            await message.channel.send('메세지 전송이 실패했습니다.')
 
 
 async def message_long_code(message, split_str):
     try:
-        url = str(message.content).split(split_str)[1].split()[0]
-        problem = url.split(
-            "https://www.acmicpc.net/problem/")[1].split()[0]
-        code = message.content.split(problem)[1].strip()
+        text = str(message.content).split(split_str, maxsplit=1)[1]
+        problem = await get_problem(text)
+        code = await get_code(text, problem)
+        await message.delete()
     except:
-        try:
-            url = str(message.content).split(split_str)[1].split()[0]
-            problem = int(url.split()[0])
-            code = message.content.split(str(problem))[1].strip()
-        except:
-            await message.channel.send('긴코드 잘못된 입력입니다.')
-            return
-
-    await message.delete()
+        await message.channel.send('잘못된 입력입니다.')
+        return
 
     try:
         data = get_data(problem)
@@ -241,7 +266,6 @@ async def message_long_code(message, split_str):
         embed.add_field(name="난이도", value=get_level(level), inline=True)
         embed.add_field(name="유형", value=tags, inline=True)
         await message.channel.send(embed=embed)
-
         await message.channel.send(author + '\n' + code)
     except:
         await message.channel.send('메세지 전송이 실패했습니다.')
@@ -258,8 +282,8 @@ async def on_message(message):
         return
     if message.content.startswith(f"{PREFIX}백준"):
         await message_baekjooon(message, '/백준 ')
-    elif message.content.startswith(f"{PREFIX}코드"):
-        await message_code(message, '/코드 ')
+    elif message.content.startswith(f"{PREFIX}코드 "):
+        await message_code(message, '/코드')
     elif message.content.startswith(f"{PREFIX}긴코드"):
         await message_long_code(message, '/긴코드 ')
 
